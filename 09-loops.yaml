@@ -1,0 +1,12 @@
+- name: play1
+  hosts: all
+  tasks:
+      - name: Printing hello from task1 of play1
+        ansible.builtin.debug:
+          msg: hello from Task "{{item}}" # item is a variable used for loop
+        loop:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5

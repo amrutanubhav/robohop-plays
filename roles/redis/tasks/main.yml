@@ -1,0 +1,28 @@
+- name: Download and Extract
+  ansible.builtin.copy:
+    src: redis.repo
+    dest: /etc/yum.repos.d/redis.repo
+
+- name: Install REDIS
+  ansible.builtin.package:
+    name: redis-6.2.11
+    state: present
+
+- name: Update the BindIP from 127.0.0.1 to 0.0.0.0
+  ansible.builtin.replace:
+    path: /etc/{{component}}.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: Update the BindIP from 127.0.0.1 to 0.0.0.0
+  ansible.builtin.replace:
+    path: /etc/{{component}}/{{component}}.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+  notify: Restart Redis
+
+- name: Enable and restart
+  ansible.builtin.systemd:
+    name: "{{component}}"
+    state: started
+    enabled: yes

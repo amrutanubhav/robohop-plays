@@ -1,0 +1,31 @@
+- name: Recursively remove Old Contents
+  ansible.builtin.file:
+    path: /home/{{APPUSER}}/{{component}}/
+    state: absent
+  ignore_errors: yes
+
+- name: Creating App Directory
+  ansible.builtin.file:
+    path: /home/{{APPUSER}}/{{component}}
+    state: directory
+    mode: '0755'
+  become_user: "{{APPUSER}}"
+
+- name: Download and Extract {{component}}
+  ansible.builtin.unarchive:
+    src: http://172.31.15.122:8081/repository/{{component}}/{{component}}-{{version}}.zip
+    dest: /home/{{APPUSER}}/{{component}}/
+    remote_src: yes
+  # ignore_errors: yes
+
+
+# - name: Copy file to roboshop home directory
+#   ansible.builtin.copy:
+#     src: /tmp/{{component}}-main/
+#     dest: /home/{{APPUSER}}/{{component}}/
+#     remote_src: yes
+#     owner: "{{APPUSER}}"
+#     group: "{{APPUSER}}"
+#   ignore_errors: yes
+
+  

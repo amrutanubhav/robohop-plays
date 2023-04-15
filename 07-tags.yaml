@@ -1,0 +1,35 @@
+- name: play1
+  hosts: all
+  tasks:
+      - name: Installing webserver
+        ansible.builtin.debug:
+          msg: Installing ws
+        tags: web
+
+      - name: Installation of WS completed
+        ansible.builtin.debug:
+          msg: WS completed
+        tags: web
+
+      - name: Installing appserver
+        ansible.builtin.debug:
+          msg: Installing appserver
+        tags: app
+
+      - name: Installation of AS completed
+        ansible.builtin.debug:
+          msg: AS completed
+        tags: app
+
+      - name: Installation of AS completed
+        ansible.builtin.debug:
+          msg: Installing DBS
+        tags: dev
+
+      - name: Installation of dbS completed
+        ansible.builtin.debug:
+          msg: DBS completed
+        tags: dev
+
+        #ansible-playbook -i inventory -e ansible_user=centos -e ansible_password=DevOps321 07-tags.yaml -t web
+        #specify which tasks to run based on tags

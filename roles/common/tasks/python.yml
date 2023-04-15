@@ -1,0 +1,55 @@
+- name: Install NodeJS
+  ansible.builtin.package:
+    name: "{{item}}"
+    state: present
+  loop:
+    - python36
+    - gcc
+    - python3-devel
+
+- name: Calling Nodejs function
+  include_role:
+    name: common
+    tasks_from: create-user
+
+- name: Calling download function
+  include_role:
+    name: common
+    tasks_from: download-nexus
+
+- name: display user id and group id
+  ansible.builtin.debug:
+    msg: "{{APPUSER_INFO}}"  ## we register this as a variable in create user common module
+
+- name: Replace old uid
+  ansible.builtin.replace:
+    path: /home/{{APPUSER}}/{{component}}/{{component}}.ini
+    regexp: 'uid = 1'
+    replace: 'uid = {{APPUSER_INFO.uid}}'
+
+- name: Replace old gid
+  ansible.builtin.replace:
+    path: /home/{{APPUSER}}/{{component}}/{{component}}.ini
+    regexp: 'gid = 1'
+    replace: 'gid = {{APPUSER_INFO.group}}'
+
+- name: test
+  ansible.builtin.shell: cat /home/roboshop/payment/payment.ini
+  register: output
+
+- name: Replace old gid
+  ansible.builtin.debug:
+    msg: "{{output}}" 
+
+- name: Installing python dependencies 
+  ansible.builtin.pip:
+    requirements: /home/{{APPUSER}}/{{component}}/requirements.txt
+    executable: pip3
+
+- name: Calling download function
+  include_role:
+    name: common
+    tasks_from: config-svc
+
+- name: Set-Hostname
+  ansible.builtin.shell: set-hostname {{component}}

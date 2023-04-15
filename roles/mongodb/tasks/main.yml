@@ -1,0 +1,36 @@
+- name: Download and Extract
+  ansible.builtin.copy:
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongodb.repo
+
+- name: Install Mongodb
+  ansible.builtin.package:
+    name: mongodb-org
+    state: present
+
+- replace:
+    path: /etc/mongod.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: Start service Mongodb, if not started
+  ansible.builtin.service:
+    name: mongod
+    state: started
+    enabled: yes
+
+- name: Download and Extract
+  ansible.builtin.unarchive:
+    src: https://github.com/stans-robot-project/mongodb/archive/main.zip
+    dest: /tmp
+    remote_src: yes
+
+- name: load catalogue schema
+  community.mongodb.mongodb_shell:
+    file: "/tmp/mongodb-main/catalogue.js"
+    idempotent: yes
+
+- name: load user schema
+  community.mongodb.mongodb_shell:
+    file: "/tmp/mongodb-main/users.js"
+    idempotent: yes

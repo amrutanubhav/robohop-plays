@@ -1,0 +1,11 @@
+- name: Demo to study facts
+  hosts: all
+  tasks:
+    - name: pull the distribution
+      ansible.builtin.debug:
+        msg: Distribution is {{ansible_distribution}}
+
+    - name: pull the distribution
+      ansible.builtin.debug:
+        msg: Mac Address is {{ansible_default_ipv4.macaddress}}
+    

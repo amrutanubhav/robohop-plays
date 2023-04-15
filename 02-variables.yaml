@@ -1,0 +1,34 @@
+- name: usage of variables
+  hosts: all
+  vars: 
+    URL: play.google.com
+    URL2: super.google.com
+  vars_files:
+    - demo-vars.yaml
+  tasks:
+    - name: Printing hello from task1 of play1
+      ansible.builtin.debug:
+          msg: hello from {{URL}}
+
+    - name: Printing hello from task2 of play1
+      ansible.builtin.debug:
+          msg: hello from "{{URL2}}" # call vairable via using  {{..}}
+
+    - name: Printing hello from task3 of play1
+      ansible.builtin.debug:
+          msg: "{{URL2}}"     #for calling only variable "" needs to be added
+
+    - name: Printing hello from task4 of play1
+      vars:
+        URL2: kakarot
+      ansible.builtin.debug:
+          msg: "{{URL2}}"    #local variables have higher precedence over global variables
+    
+    # - name: Printing hello from task4 of play1
+    #   vars:
+    #     URL2: kakarot
+    #   ansible.builtin.debug:
+    #       msg: "{{URL2}}"    #from files
+
+          #syntax from cli : ansible-playbook -i inventory -e ansible_user=centos -e ansible_password=DevOps321 -e URL=amrutanubhav 02-variables.yaml
+          # cli > vars files > local > global

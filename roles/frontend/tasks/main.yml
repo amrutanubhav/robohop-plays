@@ -1,0 +1,62 @@
+- name: Install NGINX
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: Clearning Old Html Content 
+  ansible.builtin.file:
+    path: /usr/share/nginx/html/
+    state: absent 
+  ignore_errors: yes
+
+- name: Creating App Directory
+  ansible.builtin.file:
+    path: /usr/share/nginx/html/
+    state: directory
+    mode: '0755'
+  ignore_errors: yes
+
+- name: Download and Extract
+  ansible.builtin.unarchive:
+    src: http://172.31.15.122:8081/repository/{{component}}/{{component}}-{{version}}.zip
+    dest: /usr/share/nginx/html/
+    remote_src: yes
+
+#use ony when downloading from github
+# - name: Copy contents of frontend-main to html folder
+#   ansible.builtin.copy:
+#     src: /tmp/frontend-main/static/
+#     dest: /usr/share/nginx/html/
+#     remote_src: yes
+
+- name: Copy localhost.conf to nginx default.d folder
+  ansible.builtin.template:
+    src: roboshop.conf
+    dest: /etc/nginx/default.d/roboshop.conf
+  notify: Restart Nginx
+
+# - name: Just force systemd to reread configs
+#   ansible.builtin.systemd:
+#     state: started
+#     name: nginx
+#     enabled: yes
+#     daemon_reload: yes
+
+- name: Coping Nginx Config 
+  ansible.builtin.template:                    
+    src: nginx.conf  
+    dest: /etc/nginx/nginx.conf
+
+- name: Retarting frontend service 
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+    enabled: true  
+
+# - name: Start service nginx, if not started
+#   ansible.builtin.service:
+#     name: nginx
+#     state: started
+#     enabled: yes
+- name: Set-Hostname
+  ansible.builtin.shell: set-hostname {{component}} 

@@ -1,0 +1,15 @@
+- name: play1
+  hosts: all
+  vars:
+    act: true
+  tasks:
+    - name: pull the distribution
+      ansible.builtin.debug:
+        msg: "{{act}}"
+      when: ansible_distribution == "centos"
+
+    - name: pull the distribution
+      ansible.builtin.debug:
+        msg: not centos
+      when: ansible_distribution == "ubuntu"
+      

@@ -1,0 +1,13 @@
+- name: Copy systemd.service file to systemd folder
+  ansible.builtin.template:
+    src: systemd.service
+    dest: /etc/systemd/system/{{component}}.service
+    owner: root
+    group: root
+
+- name: Just force systemd to reread configs and restart
+  ansible.builtin.systemd:
+    state: started
+    name: "{{component}}"
+    enabled: yes
+    daemon_reload: yes

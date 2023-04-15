@@ -1,0 +1,5 @@
+- name: Add the user {{APPUSER}}
+  ansible.builtin.user:
+    name: "{{APPUSER}}"
+    comment: roboshop service account user
+  register: APPUSER_INFO

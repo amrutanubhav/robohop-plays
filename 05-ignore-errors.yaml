@@ -1,0 +1,11 @@
+- name: play1
+  hosts: all
+  tasks:
+    - name: Checking tomcat is running or not
+      ansible.builtin.shell: ps -ef | grep tomcat | grep -v grep
+      register: OUT  #stores output of shell command and preserves it in the variable of our choice
+      ignore_errors: true # deliberately ignores error and goes to next task instead of terminating
+
+    - name: Checking tomcat is running or not
+      ansible.builtin.debug:
+        msg: starting tomcat
