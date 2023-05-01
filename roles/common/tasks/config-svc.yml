@@ -7,7 +7,7 @@
 
 - name: Just force systemd to reread configs and restart
   ansible.builtin.systemd:
-    state: started
+    state: restarted
     name: "{{component}}"
     enabled: yes
     daemon_reload: yes
