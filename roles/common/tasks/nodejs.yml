@@ -16,6 +16,14 @@
 #     name: "{{APPUSER}}"
 #     comment: roboshop service account user
     
+- name: Download pem file
+  ansible.builtin.get_url:
+    url: https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
+    dest: /home/roboshop/
+    mode: '0440'
+    owner: roboshop
+    group: roboshop
+
 - name: Calling download function
   include_role:
     name: common
