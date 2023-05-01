@@ -3,3 +3,10 @@
     name: "{{APPUSER}}"
     comment: roboshop service account user
   register: APPUSER_INFO
+
+- name: Install boto3 and botocore
+  ansible.builtin.pip:
+    name:
+      - botocore
+      - boto3
+    executable: pip3
