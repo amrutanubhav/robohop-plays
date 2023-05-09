@@ -1,4 +1,5 @@
 APPUSER: roboshop
 component: catalogue
 LOGLOCATION: /var/log/catalogue.log
+LOGTYPE: json
 # ENV: dev
