@@ -1,2 +1,3 @@
 component: user
 APPUSER: roboshop
+LOGLOCATION: /var/log/user.log

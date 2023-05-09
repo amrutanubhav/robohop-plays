@@ -1,2 +1,3 @@
 component: shipping
 APPUSER: roboshop
+LOGLOCATION: /var/log/shipping.log

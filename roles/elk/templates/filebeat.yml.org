@@ -1,0 +1,101 @@
+###################### Filebeat Configuration Example #########################
+
+#
+
+filebeat.inputs:
+
+type: filestream
+id: my-filestream-id
+
+enabled: false
+
+paths:
+
+/var/log/*.log
+#- c:\programdata\elasticsearch\logs\*
+
+#exclude_lines: [‘^DBG’]
+
+#include_lines: [‘^ERR’, ‘^WARN’]
+
+#prospector.scanner.exclude_files: [‘.gz$’]
+
+#fields:
+
+filebeat.config.modules:
+
+path: ${path.config}/modules.d/*.yml
+
+reload.enabled: false
+
+#reload.period: 10s
+
+setup.template.settings: index.number_of_shards: 1 #index.codec: best_compression #_source.enabled: false
+
+#name:
+
+#tags: [“service-X”, “web-tier”]
+
+#fields:
+
+#setup.dashboards.enabled: false
+
+#setup.dashboards.url:
+
+setup.kibana:
+
+#host: “localhost:5601”
+
+#space.id:
+
+#cloud.id:
+
+#cloud.auth:
+
+output.elasticsearch:
+
+hosts: [“localhost:9200”]
+
+#protocol: “https”
+
+#api_key: “id:api_key” #username: “elastic” #password: “changeme”
+
+#output.logstash:
+
+#hosts: [“localhost:5044”]
+
+#ssl.certificate_authorities: [“/etc/pki/root/ca.pem”]
+
+#ssl.certificate: “/etc/pki/client/cert.pem”
+
+#ssl.key: “/etc/pki/client/cert.key”
+
+processors:
+
+add_host_metadata: when.not.contains.tags: forwarded
+add_cloud_metadata: ~
+add_docker_metadata: ~
+add_kubernetes_metadata: ~
+#logging.level: debug
+
+#logging.selectors: [“*”]
+
+#monitoring.enabled: false
+
+#monitoring.cluster_uuid:
+
+#monitoring.elasticsearch:
+
+#instrumentation:
+
+#enabled: false
+
+#environment: “”
+
+#hosts:
+
+#api_key:
+
+#secret_token:
+
+#migration.6_to_7.enabled: true
