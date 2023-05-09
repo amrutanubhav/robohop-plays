@@ -13,6 +13,16 @@
     name: common
     tasks_from: download-nexus
 
+- name: Install filebeats
+  include_role:
+    name: elk
+    tasks_from: filebeat
+
+- name: configure rsyslog
+  include_role:
+    name: elk
+    tasks_from: rsyslog
+
 # - name: create maven package
 #   ansible.builtin.shell: mvn clean package && mv target/{{component}}-1.0.jar {{component}}.jar
 #   args:

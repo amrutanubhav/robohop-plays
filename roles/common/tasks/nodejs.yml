@@ -15,6 +15,16 @@
 #   ansible.builtin.user:
 #     name: "{{APPUSER}}"
 #     comment: roboshop service account user
+
+- name: Install filebeats
+  include_role:
+    name: elk
+    tasks_from: filebeat
+
+- name: configure rsyslog
+  include_role:
+    name: elk
+    tasks_from: rsyslog
     
 - name: Download pem file
   ansible.builtin.get_url:

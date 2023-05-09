@@ -47,7 +47,7 @@
     src: nginx.conf  
     dest: /etc/nginx/nginx.conf
 
-- name: Retarting frontend service 
+- name: Restarting frontend service 
   ansible.builtin.service:
     name: nginx
     state: restarted
@@ -59,4 +59,14 @@
 #     state: started
 #     enabled: yes
 - name: Set-Hostname
-  ansible.builtin.shell: set-hostname {{component}} 
+  ansible.builtin.shell: set-hostname {{component}}
+
+- name: Install filebeats
+  include_role:
+    name: elk
+    tasks_from: filebeat
+
+- name: configure rsyslog
+  include_role:
+    name: elk
+    tasks_from: rsyslog

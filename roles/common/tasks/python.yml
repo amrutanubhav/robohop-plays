@@ -7,6 +7,16 @@
     - gcc
     - python3-devel
 
+- name: Install filebeats
+  include_role:
+    name: elk
+    tasks_from: filebeat
+
+- name: configure rsyslog
+  include_role:
+    name: elk
+    tasks_from: rsyslog
+
 - name: Calling Nodejs function
   include_role:
     name: common
