@@ -29,7 +29,7 @@
 #     dest: /usr/share/nginx/html/
 #     remote_src: yes
 
-- name: Copy localhost.conf to nginx default.d folder
+- name: Copy proxyconf to nginx default.d folder
   ansible.builtin.template:
     src: roboshop.conf
     dest: /etc/nginx/default.d/roboshop.conf
