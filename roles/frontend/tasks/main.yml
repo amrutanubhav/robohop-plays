@@ -65,8 +65,3 @@
   include_role:
     name: elk
     tasks_from: filebeat
-
-- name: configure rsyslog
-  include_role:
-    name: elk
-    tasks_from: rsyslog
