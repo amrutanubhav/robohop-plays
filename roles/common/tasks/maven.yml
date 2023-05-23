@@ -2,7 +2,6 @@
   ansible.builtin.yum:
     name: maven
     state: installed
-  become: root
 
 - name: Calling Create user function
   include_role:
