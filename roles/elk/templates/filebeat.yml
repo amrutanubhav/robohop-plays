@@ -8,7 +8,7 @@ filebeat.inputs:
     - "{{LOGLOCATION}}"
 
   fields:
-   component: "{{component}}"
+   component: "{{COMPONENT}}"
   #  logtype: "{{LOGTYPE}}"
 
 # ============================== Filebeat modules ==============================
@@ -35,7 +35,7 @@ setup.kibana:
 # ------------------------------ Logstash Output -------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["elk ip :5044"] #replace elk ip with elk sever ip
+  hosts: ["elkip:5044"]
 
 # ================================= Processors =================================
 processors:
